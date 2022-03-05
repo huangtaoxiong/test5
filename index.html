@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="js/jquery-ui.min.css">
+   
+    <style>
+        body{margin: 0 0 0 0; padding: 0 0 0 0;}
+        .pic{height: 100px; background: #ff6600; display: flex; flex-direction: row;}
+        .pic div{margin: 0 5px;}
+        .pic img{width: 100%; height: 100%;}
+        #pic01 {border: 1px #fff solid;}
+        #pic01:hover {border: 1px #ff6600 solid;}
+        
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="pic" style="position: relative;" >
+        <div id="pic01" style="position: absolute; top:0; left: 0; width: 100px; height: 100px;"><img src="image/ewm.png" alt="" ></div>
+    </div>
+    <div style="margin-top:10px"><input type="file" id="picfile" value=""></div>
+
+    <canvas id="mycanvas" width="800" height="800" style="background-color: aliceblue; margin: 20px auto; "> </canvas>
+    <button onclick="saveCanvase()" style="margin: 30px; width: 200px;">保存</button>
+     <script>
+         var canvas=document.getElementById("mycanvas");
+        //  console.log(canvas)
+         var ctx = canvas.getContext("2d");
+         var tt = $("#pic01").css(['top','left','width','height'])
+        //   console.log("top值"+tt.top)
+            var old_dv_t = tt.top; //原始的坐标位置
+            var old_dv_l = tt.left;
+            var dv_t = tt.top; //最新坐标的位置
+            var dv_l = tt.left;
+            var dv_w = tt.width;
+            var dv_h = tt.height;
+            var url2=''
+        
+
+            var img1 = new Image(); //背景图
+            img1.src="image/01.jpg";
+            var url1= img1.src;
+            img1.onload=function(){
+                ctx.drawImage(img1,0,0,800,800) 
+          }  
+          $("#pic01").draggable({
+            cursor: 'move',
+            drag:function(ui){
+                // console.log(ui)
+                // console.log(dv_t)
+                dv_t = parseInt(old_dv_t) + ui.clientY - ui.offsetY; //最新坐标位置=原始位置坐标 + 移动的鼠标坐标 - 鼠标坐标相对元素的位置
+                dv_l = parseInt(old_dv_l) + ui.clientX - ui.offsetX;
+           
+
+                var img2 = new Image();
+                img2.src = "image/ewm.png";
+                url2= img2.src;
+                img2.onload = function(){
+                console.log(dv_t)
+                console.log(dv_l)
+                    // ctx.drawImage(img2,dv_t,dv_l,dv_w,dv_h)
+                    // console.log(url2)
+                    console.log("===========")
+                    // var imgCode = convertCanvasToImage(canvas); //将图片转为base64
+                    //  console.log(imgCode.getAttribute('src'))
+                    
+                    
+                    // ctx.save()
+                    // convertCanvasToImage()
+                    // console.log("-----------")
+                    // return canvas
+                    
+                }
+
+
+               
+            }
+          });
+
+          $("#pic01").resizable({
+            disabled : false,
+            handles : 'all',
+            autoHide: false,
+            edge : 20,
+            resize:function(event,ui){ //记录坐标事件，太好了
+                // console.log(ui)
+                dv_t = ui.position.top;
+                dv_l = ui.position.left;
+                dv_w = ui.size.width;
+                dv_h = ui.size.height;
+
+                console.log("高："+dv_h)
+                console.log("宽："+dv_w)
+                var img2 = new Image();
+                img2.src = "image/二维码.png";
+                img2.onload = function(){
+                    ctx.drawImage(img2,dv_t,dv_l,dv_w,dv_h)
+                    // var imgCode = convertCanvasToImage(canvas); //将图片转为base64
+                    //  console.log(imgCode.getAttribute('src'))
+                    
+                }
+
+            }
+    
+          });
+        
+    // function imageToCanvas(canvas,url1,url2){
+    //     var imgCode = convertCanvasToImage(canvas); //将图片转为base64  
+    //      console.log("执行--------------")   
+    // };
+    
+
+    // function convertCanvasToImage(canvas) {
+    // var image = new Image(); 
+    // image.src = canvas.toDataURL("image/png");    //canvas转化为img
+    // // image.crossOrigin = 'Anonymous'; //解决跨域问题        
+    // return image;
+
+    // }
+
+    function saveCanvase(){
+        console.log("11111")
+        
+    }
+
+  
+          
+
+
+            
+         
+
+     </script>
+
+  
+
+</body>
+</html>

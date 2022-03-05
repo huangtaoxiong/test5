@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="mycanvas" width="900" height="1000" style="border: 1px #ccc solid;"></canvas>
+</body>
+ <script>
+     var canvas = document.getElementById("mycanvas");
+     function imageToCanvas(canvas,url1,url2,code){
+         var ctx=canvas.getContext("2d");
+         
+         var img1 = new Image();
+         img1.src = url1;
+         img1.onload = function(){
+             ctx.drawImage(img1,0,0); //当图片加载完成后 赋到画布上从0 0 开始
+             
+             var img2 = new Image();
+             img2.src = url2;
+             img2.onload=function(){
+                 ctx.save();    //保存当前画布状态
+                 ctx.arc(374,134,44,0,2 * Math.PI); //剪切操作 将正方形的头像切成圆的
+                 //从画布上裁剪出这个圆形
+                 ctx.clip();       //进行裁剪
+                 ctx.drawImage(img2,330,90,88,88);   // 放入img2 在330 90坐标处， 大小 88 
+                 ctx.restore(); //释放发布状态
+                 ctx.font = "28px Arial"; 
+                 ctx.textAlign="center";
+                 ctx.fillStyle="#ffffff";
+                 ctx.fillText("你好，黄涛雄",375,220);
+                 ctx.globalAlpha=0.6; //设置透明
+                 var img3 = new Image();
+                 img3.src=code;
+                 img3.onload = function(){ //
+                     ctx.drawImage(img3,436,554,180,180);  //同理加图像
+                     console.log("===========")
+                    //  var imgCode = convertCanvasToImage(canvas); //将图片转为base64
+                     console.log("-----------")
+                    //  console.log(imgCode.getAttribute('src'))
+                 }
+
+             }
+         }
+        }
+     imageToCanvas(canvas,"https://636c-cloud1-6gcfsk5o568da2a2-1309523468.tcb.qcloud.la/01.jpg",
+     'https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132',
+     'https://636c-cloud1-6gcfsk5o568da2a2-1309523468.tcb.qcloud.la/%E4%BA%8C%E7%BB%B4%E7%A0%81.png?sign=db22f902f1f04469f054c15996d6449a&t=1645849775');            //初始化
+     
+
+//     function convertCanvasToImage(canvas) {
+//     var image = new Image(); 
+//     image.src = canvas.toDataURL("image/png");            //canvas转化为img
+//     return image;
+// }
+ 
+ </script>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Html5 Canvas 实现图片合成</title>
+
+        <style>
+            body{
+                text-align: center;
+            }
+            img {
+                border: solid 1px #ddd;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div align="center">
+            <img src="image/01.jpg">
+            <img src="image/ewm.png">
+        </div>
+        <input type="button" value="一键合成" onclick="hecheng()">
+        <a href="" download id="downloadPic">下载合成图</a>
+        <div id="imgBox" align="center">
+            
+        </div>
+        <script>
+            function hecheng() {
+                draw(function() {
+                    document.getElementById('imgBox').innerHTML = '<img src="' + base64[0] + '">';
+                    document.getElementById('downloadPic').href = base64[0];
+                })
+            }
+
+            var data = ['image/01.jpg', 'image/ewm.png'],
+                base64 = [];
+
+            function draw(fn) {
+                var c = document.createElement('canvas'),
+                    ctx = c.getContext('2d'),
+                    len = data.length;
+                c.width = 400;
+                c.height = 400;
+                ctx.rect(0, 0, c.width, c.height);
+                ctx.fillStyle = '#fff';
+                ctx.fill();
+
+                function drawing(n) {
+                    if(n < len) {
+                        var img = new Image;
+                        //img.crossOrigin = 'Anonymous'; //解决跨域
+
+                        img.src = data[n];
+                        img.onload = function() {
+                            if(n == 1) {
+                                ctx.drawImage(img, 121, 129, 160, 160); //121和129表示二维码距离背景图片左上角的X轴，Y轴，160表示生成的图片中二维码的大小
+                            } else {
+                                ctx.drawImage(img, 0, 0, c.width, c.height);
+                            }
+
+                            drawing(n + 1); //递归
+                        }
+                    } else {
+                        //保存生成作品图片
+                        base64.push(c.toDataURL()); //通过canvas.toDataURL转成base64.
+                        //alert(JSON.stringify(base64));
+                        fn();
+                    }
+                }
+                drawing(0);
+            }
+        </script>
+    </body>
+
+</html>

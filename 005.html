@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery.qrcode.min.js"></script>
+    
+</head>
+<body>
+    <div id="pop">
+        <div id="output"></div>
+        <div id="title">想去旅行的静静</div>
+    </div>
+     
+   <script>
+
+
+        $('#output').qrcode({
+            render: "canvas", //也可以替换为table
+            id: "demo",
+            foreground: "#2d2d2d",
+            width: 200,
+            height: 200,
+            background: "#fff",
+            text: "https://blog.csdn.net/weixin_39107711"
+        });
+
+   </script>
+</body>
+</html>
