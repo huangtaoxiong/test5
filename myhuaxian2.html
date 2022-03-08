@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <style>
+        .xuangx{display: flex; flex-direction: row; width: 500px; margin: 0 auto;}
+        .xuangx img{width: 25px; height: 25px; margin: 0 3px; border: 1px #ccc solid; cursor: pointer;}
+        .xuangx img:hover{ border: 1px #ff6600 solid; }
+    </style>
+</head>
+<body>
+    <div class="xuangx" > <img src="icon/zhixian.png" alt="" srcset="" onclick="zhixian()"></div>
+    <canvas width="500" id="mycanvas" height="400" style="border:1px #ccc solid;display: block; margin: 10px auto;"></canvas>
+    <script>
+        /** @type {HTMLCanvasElement} */
+        var mycanvas = document.getElementById("mycanvas")
+        var ctx = mycanvas.getContext("2d")
+        var surfaceData = null; //初始表面数据
+        var mousedown = {} //鼠标按下对象
+        var dragging = false //默认不在拖拽状态
+        var loc = null //鼠标的位置
+ 
+
+        function saveCanvasData(){ //保存当前canvas的数据
+            surfaceData = ctx.getImageData(0,0,mycanvas.width,mycanvas.height);
+        }
+
+        function updateCanvasData(){
+            ctx.putImageData(surfaceData,0,0,0,0,mycanvas.width,mycanvas.height);
+        }
+
+
+
+
+        function zhixian(){
+   
+                        function drawLine(loc){
+                        ctx.beginPath();
+                        ctx.moveTo(mousedown.x,mousedown.y);
+                        ctx.lineTo(loc.x,loc.y)
+                        ctx.stroke()
+                    
+                    }
+
+                    mycanvas.onmousedown=function(e){
+                            console.log(e)
+                            saveCanvasData();
+                        loc = {x:e.offsetX,y:e.offsetY}
+                        console.log(loc)
+                        mousedown ={x:e.offsetX,y:e.offsetY}
+                        dragging = true
+                    }
+
+                    mycanvas.onmousemove = function(e){
+                    
+                        loc = {x:e.offsetX,y:e.offsetY} 
+                        if(dragging){
+
+                            updateCanvasData()
+                            drawLine(loc)
+                        }
+                        
+
+                    }
+                    mycanvas.onmouseup = function(e){
+                        loc = {x:e.offsetX,y:e.offsetY}                   
+                        updateCanvasData()  
+                        drawLine(loc)
+                        
+                        dragging=false    
+                    }
+
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/jscolor.js"></script>
+    <title>Document</title>
+    <style>
+        .xuangx{display: flex; flex-direction: row;}
+        .xuangx img{width: 25px; height: 25px; margin: 0 3px; border: 1px #ccc solid; cursor: pointer;}
+        .xuangx img:hover{ border: 1px #ff6600 solid; }
+    </style>
+</head>
+<body>
+    <div class="xuangx">
+         <img src="icon/huabi.png" alt="" srcset="" onclick="huaxian()">
+         <img src="icon/zhixian.png" alt="" srcset="" onclick="zhixian()">
+          <span>颜色</span> <input id="yanse" value="#3399FF80" data-jscolor="{}" >
+    </div>
+    <canvas id="mycanvas" width="500"  height="350" style="border: 1px #ccc  solid; margin-top: 10px;">
+        浏览器不支持，请升级      
+    </canvas>
+    <script>
+        var mycanvas = document.getElementById("mycanvas")
+        var ctx = mycanvas.getContext("2d")
+        console.log($("#yanse").val())
+        var status = false;
+        // document.onmousedown=function(){
+        //     console.log($("#yanse").val())
+        // }   
+       function huaxian(){
+                console.log("11111")
+                document.onmousedown=function(e){
+                    console.log(e)
+                    ctx.beginPath()
+                    ctx.moveTo(e.offsetX,e.offsetY)
+                        document.onmousemove=function(e){
+                        ctx.lineTo(e.offsetX,e.offsetY)
+                        ctx.strokeStyle= $("#yanse").val()
+                        // ctx.closePath()
+                        ctx.stroke()
+                    }
+                }
+                document.onmouseup=function(){  
+                    document.onmousemove = null;
+                    document.onmousedown=null
+                }
+
+
+         }  
+         function zhixian(){
+             console.log("画直线")
+             document.onmousedown=function(e){
+                status = true;
+                console.log("按下")
+                // ctx.beginPath()
+                ctx.moveTo(e.offsetX,e.offsetY)
+                ctx.stroke();
+
+             }
+             document.onmousemove=function(e){
+                    if(status){
+               console.log("移动")
+                // ctx.lineTo(e.offsetX,e.offsetY)
+                // ctx.stroke();
+                    }
+ 
+                }
+             document.onmouseup=function(e){
+                status = false;
+                console.log("松开")
+                ctx.lineTo(e.offsetX,e.offsetY)
+                ctx.stroke();
+                document.onmousedown=null
+                document.onmousemove=null
+                document.onmouseup=null
+
+                }
+             
+         }
+    </script>
+</body>
+</html>

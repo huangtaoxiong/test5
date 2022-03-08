@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <!-- <script src="js/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="js/jquery-ui.min.css"> -->
+    <title>Document</title>
+</head>
+<body>
+    <div style="padding-bottom: 15px;"><button onclick="praintJX()">画矩形</button></div>
+    <canvas id="mycanvas" style="width: 600px; height: 300px; border: 1px #ccc solid;">        
+    </canvas>
+    <script>
+        var canvas = document.getElementById("mycanvas");
+        var ctx = canvas.getContext("2d");
+        var jx_x = 0;
+        var jx_y = 0;
+        var jx_w =0;
+        var jx_h = 0;
+
+        console.log(canvas)
+        function praintJX(){
+            console.log("111")
+            document.onmousedown = function(event){
+                // console.log(event)
+                console.log("鼠标按下")
+                jx_x = event.clientX;
+                jx_y = event.clientY;
+            }
+            document.onmouseup = function(event){
+                console.log("鼠标松开")
+                console.log(event)
+                jx_w = event.clientX - jx_x;
+                jx_h = event.clientY - jx_y;
+                console.log(jx_w + "-----" + jx_h)
+            }
+            ctx.rect(20,20,100,100);
+            ctx.stroke()
+         
+        }
+    </script>
+</body>
+</html>

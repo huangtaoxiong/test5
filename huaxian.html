@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <canvas id="mycanvas" style=" border: 1px #ccc solid; margin: 0 auto; display: block;" width="500px"  height="500px">
+        你的浏览器不支持canvas,请使用高版本的浏览器</canvas>
+        <script>
+            /*使用原生js操作canvas*/
+            var canvas = document.getElementById("mycanvas");
+            var ctx = canvas.getContext("2d");
+            // console.log(ctx)
+            ctx.beginPath()//开始一条路径
+            ctx.moveTo(0,0) //从哪里开始
+            ctx.lineTo(500,500) //到哪结束
+            ctx.stroke()// 绘制
+            // ctx.closePath()//闭合
+            document.onmousedown = function(event){
+                console.log(event)
+            }
+        </script>
+</body>
+</html>
